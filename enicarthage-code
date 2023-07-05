@@ -1,0 +1,328 @@
+// best version !! -----------------------------------------------------------------
+#define LT_R digitalRead(7)
+#define LT_M1 digitalRead(8)// right midel
+#define LT_M2 digitalRead(12) //left midel
+#define LT_L digitalRead(13)  
+int i=0 , j=0 ,t,analogvalu=0,c,pos=0,c3,e ,DEL=2000;
+char k;
+ int MOTOR_HALF_SPEED = 70;
+ int MOTOR_QUARD_SPEED = 70;
+//-------------------------------
+
+#define echoPin A0// attach pin D2 Arduino to pin Echo of HC-SR04
+#define trigPin A1 
+//Motor Pins
+//---------------------------------------
+#define ENA 3
+#define ENB 5
+#define IN1 4
+#define IN2 9
+#define IN3 10
+#define IN4 11
+#define SERVO 6
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(LT_R,INPUT);
+  pinMode(LT_M1,INPUT);
+  pinMode(LT_M2,INPUT);
+  pinMode(LT_L,INPUT); 
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  pinMode(ENA, OUTPUT);
+  pinMode(ENB, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(trigPin, OUTPUT);
+//  SERVOMOT(90);
+  pinMode(SERVO, OUTPUT);
+}
+
+// function to move the robot left
+//---------------------------------------
+void move_left(){
+  analogWrite(ENA, 100);
+  analogWrite(ENB, 100);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH); 
+  delay(50);
+}
+void move_left1(){
+  analogWrite(ENA,70);
+  analogWrite(ENB, 70);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH); 
+  
+}
+//------------------------------------------
+// function to move the robot to the forward
+//------------------------------------------
+void move_forward(){
+  analogWrite(ENA, 80);
+  analogWrite(ENB, 80);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  Serial.println("Back");
+  
+}
+void backward(){
+  analogWrite(ENA, 80);
+  analogWrite(ENB, 80);
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+  Serial.println("Back");
+  
+}
+//------------------------------------------
+// function to move the robot to the right
+//------------------------------------------
+void move_right(){
+  analogWrite(ENA, 100);
+  analogWrite(ENB, 100);
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  delay(50);
+}
+void move_right1(){
+  analogWrite(ENA, 70);
+  analogWrite(ENB, 70);
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+    
+}
+//---------------------------------------
+// function to stop the robot
+//---------------------------------------
+void off(){
+  digitalWrite(ENA, LOW);
+  digitalWrite(ENB, LOW);
+}
+  int test() {if(LT_L== LT_R)
+return 1;
+else return 0;
+  }
+  
+void pre(char k){
+  if (k=='r') move_right();
+else if (k=='l') move_left();
+   else move_forward();
+  }
+void loop() { 
+   
+  if (LT_M1==1 || LT_M2==1 || LT_L ==1 || LT_R==1){
+   t=test();
+  if(t==1){
+    if (LT_L ==0 && LT_R==0)
+  {
+    if( LT_M1==1 && LT_M2==1) move_forward();
+     else if( LT_M1==0 && LT_M2==1)   move_left1();
+     else if( LT_M1==1 && LT_M2==0)   move_right1();
+   
+   }
+    
+    
+    else  {
+      if (LT_L ==1 && LT_R==1) pre(k);
+      }
+  }
+ else {
+  
+  if(LT_R==1  &&LT_L==0 )
+  {do {
+    move_right();}
+    while(LT_R==1);
+     k='r' ;
+  }
+  
+  if(LT_R==0  &&LT_L==1 )
+  {do{
+    move_left();}
+    while(LT_L==1);
+   k='l' ;
+  }
+  
+  else {
+//    c=ultrason();
+    if(c<28 && c>31)
+    {
+//     mazz(); 
+    }
+    else
+    {
+       t=test();}
+  if(t==1){
+    if (LT_L ==0 && LT_R==0)
+  {
+    if( LT_M1==1 && LT_M2==1) move_forward();
+     else if( LT_M1==0 && LT_M2==1)   move_left1();
+     else if( LT_M1==1 && LT_M2==0)   move_right1();
+   
+   }
+   
+    
+    
+    else  {
+      if (LT_L ==1 && LT_R==1) pre(k);
+      }
+  }
+ else {
+  
+  if(LT_R==1  &&LT_L==0 )
+  {do {
+    move_right();}
+    while(LT_R==1);
+     k='r' ;
+  }
+  
+  if(LT_R==0  &&LT_L==1 )
+  {do{
+    move_left();}
+    while(LT_L==1);
+   k='l' ;
+  }
+  }
+     }
+    
+    }
+  }
+  
+} 
+int test() {
+if(LT_L== LT_R)
+  return 1;
+else return 0;
+  }
+  
+void pre(char k){
+  if (k=='r') move_right();
+else if (k=='l') move_left();
+else move_forward();
+  }
+
+ 
+  int ultrason() {
+  // Clears the trigPin condition
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+int duration = pulseIn(echoPin, HIGH);
+  // Calculating the distance
+int  distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+  // Displays the distance on the Serial Monitor
+  //Serial.print("Distance: ");
+ // Serial.print(distance);
+  //Serial.println(" cm");
+  delay (40); 
+ return(distance);
+
+
+} 
+//void mazz(){
+  move_forward();
+  
+  c=ultrason();
+  if (c<20)
+  { backward();
+    delay(40);
+    off();
+   delay(40);
+   
+      do
+      {
+         move_right1();
+         
+          c=ultrason(); 
+         
+      }while(c<40);
+      off();
+      delay(40);
+      j++;
+      move_forward();
+       c=ultrason();
+      do
+      {
+         move_left1();
+         move_forward();
+          c=ultrason(); 
+         
+      }while(c<40);
+      off();
+      j++;
+     } 
+      off();
+      delay(40);
+      j++;
+      move_forward();
+       c=ultrason();
+      do
+      {
+         move_left1();
+         move_forward();
+          c=ultrason(); 
+         
+      }while(c<40);
+      off();
+      j++;
+       move_forward();
+       c=ultrason();
+      do
+      {
+        move_right1();
+         move_forward();
+          c=ultrason(); 
+         
+      }while(c<40);
+      off();
+      j++; 
+      off();
+      delay(40);
+      j++;
+       move_forward();
+       c=ultrason();
+      do
+      {
+        move_right1();
+         move_forward();
+          c=ultrason(); 
+         
+      }while(c<40);
+      off();
+      j++;
+   
+      off();
+      delay(40);
+      j++;
+       move_forward();
+       c=ultrason();
+      do
+      {
+         move_left1();
+         move_forward();
+          c=ultrason(); 
+         
+      }while(c<40);
+      off();
+      j++;
+
+    }
+    
+
+  
+  
