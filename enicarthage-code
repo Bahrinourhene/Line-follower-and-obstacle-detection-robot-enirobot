@@ -4,7 +4,7 @@
 #define LT_M2 digitalRead(12) //left midel
 #define LT_L digitalRead(13)  
 int i=0 , j=0 ,t,analogvalu=0,c,pos=0,c3,e ,DEL=2000;
-char k;
+char k='f';
  int MOTOR_HALF_SPEED = 70;
  int MOTOR_QUARD_SPEED = 70;
 //-------------------------------
@@ -20,6 +20,7 @@ char k;
 #define IN3 10
 #define IN4 11
 #define SERVO 6
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -234,95 +235,78 @@ int  distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go an
 
 
 } 
-//void mazz(){
+//void mazz
+ void mazz() {
   move_forward();
-  
-  c=ultrason();
-  if (c<20)
-  { backward();
+  c = ultrason();
+  if (c < 20) {
+    backward();
     delay(40);
     off();
-   delay(40);
-   
-      do
-      {
-         move_right1();
-         
-          c=ultrason(); 
-         
-      }while(c<40);
-      off();
-      delay(40);
-      j++;
-      move_forward();
-       c=ultrason();
-      do
-      {
-         move_left1();
-         move_forward();
-          c=ultrason(); 
-         
-      }while(c<40);
-      off();
-      j++;
-     } 
-      off();
-      delay(40);
-      j++;
-      move_forward();
-       c=ultrason();
-      do
-      {
-         move_left1();
-         move_forward();
-          c=ultrason(); 
-         
-      }while(c<40);
-      off();
-      j++;
-       move_forward();
-       c=ultrason();
-      do
-      {
-        move_right1();
-         move_forward();
-          c=ultrason(); 
-         
-      }while(c<40);
-      off();
-      j++; 
-      off();
-      delay(40);
-      j++;
-       move_forward();
-       c=ultrason();
-      do
-      {
-        move_right1();
-         move_forward();
-          c=ultrason(); 
-         
-      }while(c<40);
-      off();
-      j++;
-   
-      off();
-      delay(40);
-      j++;
-       move_forward();
-       c=ultrason();
-      do
-      {
-         move_left1();
-         move_forward();
-          c=ultrason(); 
-         
-      }while(c<40);
-      off();
-      j++;
+    delay(40);
 
-    }
-    
+    do {
+      move_right1();
+      c = ultrason();
+    } while (c < 40);
+    off();
+    delay(40);
+    j++;
+    move_forward();
+    c = ultrason();
+    do {
+      move_left1();
+      move_forward();
+      c = ultrason();
+    } while (c < 40);
+    off();
+    j++;
+  }
 
-  
-  
+  off();
+  delay(40);
+  j++;
+  move_forward();
+  c = ultrason();
+  do {
+    move_left1();
+    move_forward();
+    c = ultrason();
+  } while (c < 40);
+  off();
+  j++;
+  move_forward();
+  c = ultrason();
+  do {
+    move_right1();
+    move_forward();
+    c = ultrason();
+  } while (c < 40);
+  off();
+  j++;
+  off();
+  delay(40);
+  j++;
+  move_forward();
+  c = ultrason();
+  do {
+    move_right1();
+    move_forward();
+    c = ultrason();
+  } while (c < 40);
+  off();
+  j++;
+
+  off();
+  delay(40);
+  j++;
+  move_forward();
+  c = ultrason();
+  do {
+    move_left1();
+    move_forward();
+    c = ultrason();
+  } while (c < 40);
+  off();
+  j++;
+}
